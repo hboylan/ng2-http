@@ -1,0 +1,110 @@
+{
+  "name": "ng2-http",
+  "version": "0.0.0-alpha",
+  "description": "Angular2 HttpModule wrapper with decorators and interceptors",
+  "main": "./dist/umd/ng2-http.js",
+  "module": "./dist/esm/src/index.js",
+  "typings": "./dist/esm/src/index.d.ts",
+  "scripts": {
+    "start": "concurrently --raw \"webpack-dev-server --open\" \"npm run test:watch\"",
+    "build:demo": "webpack -p",
+    "build:umd": "webpack --config webpack.config.umd.js",
+    "build:ngc": "ngc -p tsconfig-ngc.json",
+    "build:dist": "npm run build:umd && npm run build:ngc",
+    "build:clean": "rm -rf dist",
+    "test": "karma start",
+    "test:watch": "karma start --watch",
+    "commit": "git add -A && git-cz",
+    "push": "npm run commit && git push origin master",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "typedoc": "typedoc --options typedoc.json --exclude src/util.ts src/*.ts",
+    "gh-pages": "git checkout gh-pages && git merge master && npm run build:demo && npm run typedoc && git add . && git commit -m 'chore(docs): build demo and docs' && git push && git checkout master",
+    "prerelease": "npm test",
+    "release": "standard-version --first-release && npm run build:dist && npm run commit && git push --follow-tags origin master && npm publish",
+    "postrelease": "npm run build:clean && npm run gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hboylan/ng2-rest.git"
+  },
+  "keywords": [
+    "angular2",
+    "rest",
+    "client",
+    "ng2",
+    "ngmodule",
+    "http"
+  ],
+  "author": "Hugh Boylan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hboylan/ng2-rest/issues"
+  },
+  "homepage": "https://github.com/hboylan/ng2-rest#readme",
+  "devDependencies": {
+    "@angular/common": "~2.1.2",
+    "@angular/compiler": "~2.1.2",
+    "@angular/compiler-cli": "~2.1.2",
+    "@angular/core": "~2.1.2",
+    "@angular/forms": "~2.1.2",
+    "@angular/http": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@angular/platform-browser-dynamic": "~2.1.2",
+    "@angular/platform-server": "~2.1.2",
+    "@types/chai": "~3.4.34",
+    "@types/core-js": "~0.9.34",
+    "@types/jasmine": "~2.5.37",
+    "@types/sinon": "~1.16.31",
+    "@types/sinon-chai": "~2.7.27",
+    "chai": "~3.5.0",
+    "commitizen": "~2.8.1",
+    "concurrently": "~3.1.0",
+    "conventional-changelog": "~1.1.0",
+    "conventional-changelog-cli": "~1.2.0",
+    "core-js": "~2.4.1",
+    "cz-conventional-changelog": "~1.2.0",
+    "ghooks": "~1.3.2",
+    "imports-loader": "~0.6.5",
+    "jasmine-core": "~2.5.2",
+    "karma": "~1.3.0",
+    "karma-coverage": "~1.1.1",
+    "karma-jasmine": "~1.0.2",
+    "karma-phantomjs-launcher": "~1.0.2",
+    "karma-remap-istanbul": "~0.2.1",
+    "karma-sourcemap-loader": "~0.3.7",
+    "karma-webpack": "~1.8.0",
+    "phantomjs-prebuilt": "~2.1.13",
+    "rxjs": "5.0.0-beta.12",
+    "sinon": "~1.17.6",
+    "sinon-chai": "~2.8.0",
+    "sourcemap-istanbul-instrumenter-loader": "~0.2.0",
+    "standard-version": "~3.0.0",
+    "ts-loader": "~1.0.0",
+    "tslint": "~3.15.1",
+    "tslint-loader": "~2.1.5",
+    "typedoc": "~0.5.1",
+    "typescript": "~2.0.7",
+    "validate-commit-msg": "~2.8.2",
+    "webpack": "~1.13.3",
+    "webpack-dev-server": "~1.16.2",
+    "zone.js": "~0.6.26"
+  },
+  "peerDependencies": {
+    "@angular/core": "~2.1.2",
+    "@angular/http": "~2.1.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    },
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "ng2-http-wrapper": "^0.0.4-alpha"
+  }
+}
