@@ -66,15 +66,15 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="ng2-http">ng2-http</h1>
-				<!-- [![Build Status](https://travis-ci.org/hboylan/ng2-rest.svg?branch=master)](https://travis-ci.org/hboylan/ng2-rest) -->
-				<p><a href="http://badge.fury.io/js/ng2-rest"><img src="https://badge.fury.io/js/ng2-rest.svg" alt="npm version"></a>
-					<a href="https://david-dm.org/hboylan/ng2-rest?type=dev"><img src="https://david-dm.org/hboylan/ng2-rest/dev-status.svg" alt="devDependency Status"></a>
-					<a href="https://david-dm.org/hboylan/ng2-rest?type=peer"><img src="https://david-dm.org/hboylan/ng2-rest/peer-status.svg" alt="peerDependency Status"></a>
-					<a href="https://github.com/hboylan/ng2-rest/issues"><img src="https://img.shields.io/github/issues/hboylan/ng2-rest.svg" alt="GitHub issues"></a>
-					<a href="https://github.com/hboylan/ng2-rest/stargazers"><img src="https://img.shields.io/github/stars/hboylan/ng2-rest.svg" alt="GitHub stars"></a>
-				<a href="https://raw.githubusercontent.com/hboylan/ng2-rest/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
+				<!-- [![Build Status](https://travis-ci.org/hboylan/ng2-http.svg?branch=master)](https://travis-ci.org/hboylan/ng2-http) -->
+				<p><a href="http://badge.fury.io/js/ng2-http"><img src="https://badge.fury.io/js/ng2-http.svg" alt="npm version"></a>
+					<a href="https://david-dm.org/hboylan/ng2-http?type=dev"><img src="https://david-dm.org/hboylan/ng2-http/dev-status.svg" alt="devDependency Status"></a>
+					<a href="https://david-dm.org/hboylan/ng2-http?type=peer"><img src="https://david-dm.org/hboylan/ng2-http/peer-status.svg" alt="peerDependency Status"></a>
+					<a href="https://github.com/hboylan/ng2-http/issues"><img src="https://img.shields.io/github/issues/hboylan/ng2-http.svg" alt="GitHub issues"></a>
+					<a href="https://github.com/hboylan/ng2-http/stargazers"><img src="https://img.shields.io/github/stars/hboylan/ng2-http.svg" alt="GitHub stars"></a>
+				<a href="https://raw.githubusercontent.com/hboylan/ng2-http/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
 				<h2 id="demo">Demo</h2>
-				<p><a href="https://hboylan.github.io/ng2-rest/demo/">https://hboylan.github.io/ng2-rest/demo/</a></p>
+				<p><a href="https://hboylan.github.io/ng2-http/demo/">https://hboylan.github.io/ng2-http/demo/</a></p>
 				<h2 id="table-of-contents">Table of contents</h2>
 				<ul>
 					<li><a href="#about">About</a></li>
@@ -85,10 +85,18 @@
 				</ul>
 				<h2 id="about">About</h2>
 				<p>Angular2 HTTP wrapper for REST client services</p>
+				<h3 id="shoutout-">Shoutout! (╯°□°）╯</h3>
+				<p>Created this project using this awesome Yeoman generator:</p>
+				<pre><code class="lang-bash">yarn add generator-angular2-module --dev
+</code></pre>
 				<h2 id="installation">Installation</h2>
+				<p>Install through yarn:</p>
+				<pre><code class="lang-bash">yarn add ng2-http
+</code></pre>
 				<p>Install through npm:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save ng2-http</span>
-</code></pre><p>Then use it in your app like so:</p>
+				<pre><code class="lang-bash">npm install --save ng2-http
+</code></pre>
+				<p>Then use it in your app like so:</p>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.module.ts</span>
 <span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
 <span class="hljs-keyword">import</span> {BrowserModule} from <span class="hljs-string">'@angular/platform-browser'</span>;
@@ -127,12 +135,13 @@
   }
 
   @POST(<span class="hljs-string">'/posts'</span>)
-  <span class="hljs-keyword">public</span> createPost(@Body post: Post): Observable&lt;Response&gt; {
+  @Produces&lt;Post&gt;()
+  <span class="hljs-keyword">public</span> createPost(@Body post: Post): Observable&lt;Post&gt; {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
   }
 
   @GET(<span class="hljs-string">'/posts'</span>)
-  @Produces&lt;Post[]&gt;(res =&gt; &lt;Post[]&gt;res.json())
+  @Produces&lt;Post[]&gt;()
   <span class="hljs-keyword">public</span> getPosts(@Query(<span class="hljs-string">'userId'</span>) userId?: <span class="hljs-built_in">number</span>): Observable&lt;Post[]&gt; {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
   }
@@ -166,15 +175,15 @@
   }
 
   getPosts() {
-    <span class="hljs-keyword">this</span>.demoService.getPosts().subscribe(res =&gt; {
-      <span class="hljs-keyword">this</span>.demoList = res;
+    <span class="hljs-keyword">this</span>.demoService.getPosts().subscribe(posts =&gt; {
+      <span class="hljs-keyword">this</span>.demoList = posts;
     });
   }
 }
 </code></pre>
 				<h2 id="documentation">Documentation</h2>
 				<p>All documentation is auto-generated from the source via typedoc and can be viewed here:
-				<a href="https://hboylan.github.io/ng2-rest/docs/">https://hboylan.github.io/ng2-rest/docs/</a></p>
+				<a href="https://hboylan.github.io/ng2-http/docs/">https://hboylan.github.io/ng2-http/docs/</a></p>
 				<hr>
 				<h2 id="development">Development</h2>
 				<h3 id="prepare-your-environment">Prepare your environment</h3>
