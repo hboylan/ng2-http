@@ -1,14 +1,14 @@
 # ng2-http
-<!-- [![Build Status](https://travis-ci.org/hboylan/ng2-rest.svg?branch=master)](https://travis-ci.org/hboylan/ng2-rest) -->
-[![npm version](https://badge.fury.io/js/ng2-rest.svg)](http://badge.fury.io/js/ng2-rest)
-[![devDependency Status](https://david-dm.org/hboylan/ng2-rest/dev-status.svg)](https://david-dm.org/hboylan/ng2-rest?type=dev)
-[![peerDependency Status](https://david-dm.org/hboylan/ng2-rest/peer-status.svg)](https://david-dm.org/hboylan/ng2-rest?type=peer)
-[![GitHub issues](https://img.shields.io/github/issues/hboylan/ng2-rest.svg)](https://github.com/hboylan/ng2-rest/issues)
-[![GitHub stars](https://img.shields.io/github/stars/hboylan/ng2-rest.svg)](https://github.com/hboylan/ng2-rest/stargazers)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hboylan/ng2-rest/master/LICENSE)
+<!-- [![Build Status](https://travis-ci.org/hboylan/ng2-http.svg?branch=master)](https://travis-ci.org/hboylan/ng2-http) -->
+[![npm version](https://badge.fury.io/js/ng2-http.svg)](http://badge.fury.io/js/ng2-http)
+[![devDependency Status](https://david-dm.org/hboylan/ng2-http/dev-status.svg)](https://david-dm.org/hboylan/ng2-http?type=dev)
+[![peerDependency Status](https://david-dm.org/hboylan/ng2-http/peer-status.svg)](https://david-dm.org/hboylan/ng2-http?type=peer)
+[![GitHub issues](https://img.shields.io/github/issues/hboylan/ng2-http.svg)](https://github.com/hboylan/ng2-http/issues)
+[![GitHub stars](https://img.shields.io/github/stars/hboylan/ng2-http.svg)](https://github.com/hboylan/ng2-http/stargazers)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/hboylan/ng2-http/master/LICENSE)
 
 ## Demo
-https://hboylan.github.io/ng2-rest/demo/
+https://hboylan.github.io/ng2-http/demo/
 
 ## Table of contents
 
@@ -72,12 +72,13 @@ export class DemoService extends RESTClient {
   }
 
   @POST('/posts')
-  public createPost(@Body post: Post): Observable<Response> {
+  @Produces<Post>()
+  public createPost(@Body post: Post): Observable<Post> {
     return null;
   }
 
   @GET('/posts')
-  @Produces<Post[]>(res => <Post[]>res.json())
+  @Produces<Post[]>()
   public getPosts(@Query('userId') userId?: number): Observable<Post[]> {
     return null;
   }
@@ -113,8 +114,8 @@ export class Demo {
   }
 
   getPosts() {
-    this.demoService.getPosts().subscribe(res => {
-      this.demoList = res;
+    this.demoService.getPosts().subscribe(posts => {
+      this.demoList = posts;
     });
   }
 }
@@ -122,7 +123,7 @@ export class Demo {
 
 ## Documentation
 All documentation is auto-generated from the source via typedoc and can be viewed here:
-https://hboylan.github.io/ng2-rest/docs/
+https://hboylan.github.io/ng2-http/docs/
 
 ---
 
