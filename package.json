@@ -1,6 +1,6 @@
 {
   "name": "ng2-http",
-  "version": "0.0.0-alpha",
+  "version": "0.0.1-alpha",
   "description": "Angular2 HttpModule wrapper with decorators and interceptors",
   "main": "./dist/umd/ng2-http.js",
   "module": "./dist/esm/src/index.js",
@@ -103,8 +103,5 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "ng2-http-wrapper": "^0.0.4-alpha"
   }
 }
