@@ -20,14 +20,16 @@ https://hboylan.github.io/ng2-http/demo/
 
 ## About
 
-Angular2 HTTP wrapper for REST client services
+Angular2 HttpModule wrapper with decorators and interceptors
 
 ### Shoutout! (╯°□°）╯
 
-Created this project using this awesome Yeoman generator:
+Generated this project using this awesome Yeoman generator:
 ```bash
 yarn add generator-angular2-module --dev
 ```
+
+Based the source code from [this](https://github.com/Paldom/angular2-rest) repo.
 
 ## Installation
 
