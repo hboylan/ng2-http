@@ -1,0 +1,328 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ng2-http</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script src="assets/js/modernizr.js"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">ng2-http</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> ng2-http</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="ng2-http">ng2-http</h1>
+				<!-- [![Build Status](https://travis-ci.org/hboylan/ng2-rest.svg?branch=master)](https://travis-ci.org/hboylan/ng2-rest) -->
+				<p><a href="http://badge.fury.io/js/ng2-rest"><img src="https://badge.fury.io/js/ng2-rest.svg" alt="npm version"></a>
+					<a href="https://david-dm.org/hboylan/ng2-rest?type=dev"><img src="https://david-dm.org/hboylan/ng2-rest/dev-status.svg" alt="devDependency Status"></a>
+					<a href="https://david-dm.org/hboylan/ng2-rest?type=peer"><img src="https://david-dm.org/hboylan/ng2-rest/peer-status.svg" alt="peerDependency Status"></a>
+					<a href="https://github.com/hboylan/ng2-rest/issues"><img src="https://img.shields.io/github/issues/hboylan/ng2-rest.svg" alt="GitHub issues"></a>
+					<a href="https://github.com/hboylan/ng2-rest/stargazers"><img src="https://img.shields.io/github/stars/hboylan/ng2-rest.svg" alt="GitHub stars"></a>
+				<a href="https://raw.githubusercontent.com/hboylan/ng2-rest/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
+				<h2 id="demo">Demo</h2>
+				<p><a href="https://hboylan.github.io/ng2-rest/demo/">https://hboylan.github.io/ng2-rest/demo/</a></p>
+				<h2 id="table-of-contents">Table of contents</h2>
+				<ul>
+					<li><a href="#about">About</a></li>
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#documentation">Documentation</a></li>
+					<li><a href="#development">Development</a></li>
+					<li><a href="#licence">License</a></li>
+				</ul>
+				<h2 id="about">About</h2>
+				<p>Angular2 HTTP wrapper for REST client services</p>
+				<h2 id="installation">Installation</h2>
+				<p>Install through npm:</p>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save ng2-http</span>
+</code></pre><p>Then use it in your app like so:</p>
+				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.module.ts</span>
+<span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {BrowserModule} from <span class="hljs-string">'@angular/platform-browser'</span>;
+<span class="hljs-keyword">import</span> {RESTModule} from <span class="hljs-string">'ng2-http'</span>;
+<span class="hljs-keyword">import</span> {Demo} from <span class="hljs-string">'./demo.component'</span>;
+<span class="hljs-keyword">import</span> {DemoService} from <span class="hljs-string">'./demo.service'</span>;
+
+@NgModule({
+  declarations: [Demo],
+  imports: [BrowserModule, RESTModule],
+  bootstrap: [Demo],
+  providers: [DemoService]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoModule {}
+</code></pre>
+				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.service.ts</span>
+<span class="hljs-keyword">import</span> {Injectable} from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {Http, Request, Response} from <span class="hljs-string">'@angular/http'</span>;
+<span class="hljs-keyword">import</span> {RESTClient, BaseUrl, DefaultHeaders, GET, POST, Body, Query, Produces} from <span class="hljs-string">'ng2-http'</span>;
+<span class="hljs-keyword">import</span> {Observable} from <span class="hljs-string">'rxjs/Observable'</span>;
+
+@Injectable()
+@BaseUrl(<span class="hljs-string">'https://jsonplaceholder.typicode.com'</span>)
+@DefaultHeaders({
+  <span class="hljs-string">'Accept'</span>: <span class="hljs-string">'application/json'</span>,
+  <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoService extends RESTClient {
+
+  <span class="hljs-keyword">constructor</span>(protected http: Http) {<span class="hljs-keyword">super</span>(http)}
+
+  <span class="hljs-keyword">protected</span> requestInterceptor(req: Request) {}
+
+  <span class="hljs-keyword">protected</span> responseInterceptor(res: Observable&lt;Response&gt;): Observable&lt;Response&gt; {
+    <span class="hljs-keyword">return</span> res
+  }
+
+  @POST(<span class="hljs-string">'/posts'</span>)
+  <span class="hljs-keyword">public</span> createPost(@Body post: Post): Observable&lt;Response&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+
+  @GET(<span class="hljs-string">'/posts'</span>)
+  @Produces&lt;Post[]&gt;(res =&gt; &lt;Post[]&gt;res.json())
+  <span class="hljs-keyword">public</span> getPosts(@Query(<span class="hljs-string">'userId'</span>) userId?: <span class="hljs-built_in">number</span>): Observable&lt;Post[]&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Post {
+
+  <span class="hljs-keyword">constructor</span>(
+    public userId: number,
+    public title: string,
+    public body: string,
+    public id?: number
+  ) {}
+}
+</code></pre>
+				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.component.ts</span>
+<span class="hljs-keyword">import</span> {Component, Input} from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {DemoService, Post} from <span class="hljs-string">'./demo.service'</span>;
+
+@Component(...)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Demo {
+  @Input() <span class="hljs-keyword">public</span> demoPost: Post = <span class="hljs-keyword">new</span> Post(<span class="hljs-number">1</span>, <span class="hljs-string">'Demo Title'</span>, <span class="hljs-string">'Demo Body'</span>);
+  @Input() <span class="hljs-keyword">public</span> demoList: Post[] = [];
+
+  <span class="hljs-keyword">constructor</span>(public demoService: DemoService) {
+    <span class="hljs-keyword">this</span>.getPosts();
+  }
+
+  createPost() {
+    <span class="hljs-keyword">this</span>.demoService.createPost(<span class="hljs-keyword">this</span>.demoPost);
+  }
+
+  getPosts() {
+    <span class="hljs-keyword">this</span>.demoService.getPosts().subscribe(res =&gt; {
+      <span class="hljs-keyword">this</span>.demoList = res;
+    });
+  }
+}
+</code></pre>
+				<h2 id="documentation">Documentation</h2>
+				<p>All documentation is auto-generated from the source via typedoc and can be viewed here:
+				<a href="https://hboylan.github.io/ng2-rest/docs/">https://hboylan.github.io/ng2-rest/docs/</a></p>
+				<hr>
+				<h2 id="development">Development</h2>
+				<h3 id="prepare-your-environment">Prepare your environment</h3>
+				<ul>
+					<li>Install <a href="http://nodejs.org/">Node.js</a> and NPM (should come with)</li>
+					<li>Install local dev dependencies: <code>npm install</code> while current directory is this repo</li>
+				</ul>
+				<h3 id="development-server">Development server</h3>
+				<p>Run <code>npm start</code> to start a development server on port 8000 with auto reload + tests.</p>
+				<h3 id="testing">Testing</h3>
+				<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
+				<h3 id="release">Release</h3>
+				<ul>
+					<li>Bump the version in package.json (once the module hits 1.0 this will become automatic)<pre><code class="lang-bash">npm run release
+</code></pre>
+					</li>
+				</ul>
+				<h2 id="license">License</h2>
+				<p>MIT</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/builder.html" class="tsd-kind-icon">Builder</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/restclient.html" class="tsd-kind-icon">RESTClient</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/restmodule.html" class="tsd-kind-icon">RESTModule</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#body" class="tsd-kind-icon">Body</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#delete" class="tsd-kind-icon">DELETE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#get" class="tsd-kind-icon">GET</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#head" class="tsd-kind-icon">HEAD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#header" class="tsd-kind-icon">Header</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#post" class="tsd-kind-icon">POST</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#put" class="tsd-kind-icon">PUT</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#path" class="tsd-kind-icon">Path</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#query" class="tsd-kind-icon">Query</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#baseurl" class="tsd-kind-icon">Base<wbr>Url</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#defaultheaders" class="tsd-kind-icon">Default<wbr>Headers</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#headers" class="tsd-kind-icon">Headers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#produces" class="tsd-kind-icon">Produces</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
