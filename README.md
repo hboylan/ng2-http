@@ -1,4 +1,6 @@
 # ng2-http
+
+[![Join the chat at https://gitter.im/ng2-http/Lobby](https://badges.gitter.im/ng2-http/Lobby.svg)](https://gitter.im/ng2-http/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <!-- [![Build Status](https://travis-ci.org/hboylan/ng2-http.svg?branch=master)](https://travis-ci.org/hboylan/ng2-http) -->
 [![npm version](https://badge.fury.io/js/ng2-http.svg)](http://badge.fury.io/js/ng2-http)
 [![devDependency Status](https://david-dm.org/hboylan/ng2-http/dev-status.svg)](https://david-dm.org/hboylan/ng2-http?type=dev)
