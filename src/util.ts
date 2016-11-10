@@ -107,10 +107,11 @@ export class Builder {
 
           // intercept the request
           this.requestInterceptor(req);
+
           // make the request and store the observable for later transformation
           var observable: Observable<any> = this.http.request(req);
 
-          // intercept the response
+          // global response interceptor
           observable = this.responseInterceptor(observable);
 
           // transform the obserable in accordance to the @Produces decorator

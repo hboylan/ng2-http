@@ -2,16 +2,16 @@ import {
   inject,
   ComponentFixture,
   TestBed
-} from '@angular/core/testing';
-import {assert, expect} from 'chai';
-import {DemoService, Post} from '../demo/demo.service';
-import {DemoModule} from '../demo/demo.module';
+} from '@angular/core/testing'
+import {assert, expect} from 'chai'
+import {DemoService, Post} from '../demo/demo.service'
+import {DemoModule} from '../demo/demo.module'
 
 describe('demo component', () => {
 
   beforeEach(() => {
-    TestBed.configureTestingModule({imports: [DemoModule]});
-  });
+    return TestBed.configureTestingModule({ imports: [DemoModule] })
+  })
 
   it('should get posts', inject([DemoService], (service: DemoService) => {
     service.getPosts().subscribe(posts => {
@@ -31,8 +31,8 @@ describe('demo component', () => {
   it('should create post', inject([DemoService], (service: DemoService) => {
     let post = new Post(1, 'Test Post', 'Test Body')
     service.createPost(post).subscribe(p => {
-      assert.isNumber(p.id);
+      assert.isNumber(p.id)
     })
   }))
 
-});
+})
