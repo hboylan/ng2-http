@@ -6,7 +6,7 @@ import {DemoService, Post} from './demo.service';
   template: `
     <h3>Sample Posts</h3>
 
-    <form (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <form (ngSubmit)="onSubmit()" *ngIf="!isLoading" style="margin-bottom: 10px">
       <div class="form-group">
         <label for="userId">User ID</label>
         <input type="text" class="form-control" id="userId" name="userId" placeholder="User ID" [(ngModel)]="demoPost.userId">
@@ -21,6 +21,8 @@ import {DemoService, Post} from './demo.service';
       </div>
       <button type="submit" class="btn btn-primary">Create</button>
     </form>
+
+    <button class="btn btn-info" (click)="onGetUserPosts()">Get User {{demoPost.userId}} posts</button>
 
     <table class="table table-hover">
       <thead>
@@ -56,6 +58,14 @@ export class Demo implements OnInit {
       this.isLoading = false
       this.posts.push(post)
       this.demoPost = new Post(1, 'Demo Post', 'Lorem Ipsum');
+    })
+  }
+
+  onGetUserPosts() {
+    this.isLoading = true
+    this.service.getPosts(this.demoPost.userId).subscribe(posts => {
+      this.isLoading = false
+      this.posts = posts
     })
   }
 }

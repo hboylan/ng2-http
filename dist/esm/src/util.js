@@ -64,7 +64,7 @@ export var Builder = (function () {
                             if (value instanceof Object) {
                                 value = JSON.stringify(value);
                             }
-                            search.set(encodeURIComponent(key), encodeURIComponent(value));
+                            search.set(key, value);
                         });
                     }
                     // Headers

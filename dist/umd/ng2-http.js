@@ -5538,9 +5538,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Defines the type(s) that the responses can produce
 	 */
-	function Produces() {
+	function Produces(interceptor) {
 	    return function (target, propertyKey, descriptor) {
-	        descriptor.producer = function (res) { return res.json(); };
+	        descriptor.producer = function (res) {
+	            if (interceptor) {
+	                interceptor(res);
+	            }
+	            return res.json();
+	        };
 	        return descriptor;
 	    };
 	}
@@ -5765,7 +5770,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            if (value instanceof Object) {
 	                                value = JSON.stringify(value);
 	                            }
-	                            search.set(encodeURIComponent(key), encodeURIComponent(value));
+	                            search.set(key, value);
 	                        });
 	                    }
 	                    // Headers

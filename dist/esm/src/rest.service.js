@@ -85,9 +85,14 @@ export function Headers(headersDef) {
 /**
  * Defines the type(s) that the responses can produce
  */
-export function Produces() {
+export function Produces(interceptor) {
     return function (target, propertyKey, descriptor) {
-        descriptor.producer = function (res) { return res.json(); };
+        descriptor.producer = function (res) {
+            if (interceptor) {
+                interceptor(res);
+            }
+            return res.json();
+        };
         return descriptor;
     };
 }

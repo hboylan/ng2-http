@@ -46,7 +46,7 @@ export declare function Headers(headersDef: any): (target: RESTClient, propertyK
 /**
  * Defines the type(s) that the responses can produce
  */
-export declare function Produces<T>(): (target: RESTClient, propertyKey: string, descriptor: any) => any;
+export declare function Produces<T>(interceptor?: (res: Response) => void): (target: RESTClient, propertyKey: string, descriptor: any) => any;
 /**
  * Path variable of a method's url, type: string
  * @param {string} key - path key to bind value

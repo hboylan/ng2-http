@@ -95,9 +95,14 @@ export function Headers(headersDef: any) {
 /**
  * Defines the type(s) that the responses can produce
  */
-export function Produces<T>() {
+export function Produces<T>(interceptor?: (res: Response) => void) {
   return function(target: RESTClient, propertyKey: string, descriptor: any) {
-    descriptor.producer = (res: Response) => <T>res.json();
+    descriptor.producer = (res: Response) => {
+      if (interceptor) {
+        interceptor(res)
+      }
+      return <T>res.json()
+    }
     return descriptor;
   };
 }
