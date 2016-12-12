@@ -22,8 +22,12 @@ export class DemoService extends RESTClient {
   }
 
   @GET('/posts')
-  @Produces<Post[]>()
-  public getPosts(@Query('userId') userId?: number): Observable<Post[]> {
+  @Produces<Post[]>((res: Response) => {
+    res.headers.forEach((values: string[], name: string) => {
+      console.log(name, '=', values)
+    })
+  })
+  public getPosts(@Query('$userId') userId?: number): Observable<Post[]> {
     return null;
   }
 
