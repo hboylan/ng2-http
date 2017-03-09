@@ -44,12 +44,6 @@ export class Builder {
 
         descriptor.value = function(...args: any[]) {
 
-          // Body
-          var body = null;
-          if (pBody) {
-            body = JSON.stringify(args[pBody[0].parameterIndex]);
-          }
-
           // Path
           var resUrl: string = url;
           if (pPath) {
@@ -94,6 +88,17 @@ export class Builder {
             }
           }
 
+          // Body
+          var urlencoded = headers.get('Content-Type');
+          var body = null;
+          if (pBody) {
+            if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
+              body = args[pBody[0].parameterIndex];
+            } else {
+              body = JSON.stringify(args[pBody[0].parameterIndex]);
+            }
+          }
+          
           // Request options
           var options = new RequestOptions({
             method,
