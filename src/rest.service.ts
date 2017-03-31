@@ -24,7 +24,8 @@ export class RESTClient {
   public constructor(@Inject(Http) protected http: Http) {}
 
   protected getBaseUrl(): string {
-    return null;
+    if (AngularHeaders) if (RequestOptions) if (URLSearchParams) return null;   // this is to quash unused imports messages
+    return undefined;
   };
 
   protected getDefaultHeaders(): Object {
@@ -154,3 +155,8 @@ export let DELETE = Builder.method(RequestMethods.Delete);
  * @param {string} url - resource url of the method
  */
 export let HEAD = Builder.method(RequestMethods.Head);
+/**
+ * PATCH method
+ * @param {string} url - resource url of the method
+ */
+export let PATCH = Builder.method(RequestMethods.Patch);
