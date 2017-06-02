@@ -20,6 +20,7 @@ import {Builder} from './util';
 */
 @Injectable()
 export class RESTClient {
+  public withCredentials: boolean = false;
 
   public constructor(@Inject(Http) protected http: Http) {}
 

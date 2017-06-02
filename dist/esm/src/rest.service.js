@@ -11,6 +11,7 @@ import { Builder } from './util';
 export var RESTClient = (function () {
     function RESTClient(http) {
         this.http = http;
+        this.withCredentials = false;
     }
     RESTClient.prototype.getBaseUrl = function () {
         return null;
@@ -43,9 +44,9 @@ export var RESTClient = (function () {
         { type: Injectable },
     ];
     /** @nocollapse */
-    RESTClient.ctorParameters = [
+    RESTClient.ctorParameters = function () { return [
         { type: Http, decorators: [{ type: Inject, args: [Http,] },] },
-    ];
+    ]; };
     return RESTClient;
 }());
 /**

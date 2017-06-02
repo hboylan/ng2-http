@@ -18,7 +18,7 @@ export var RESTModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    RESTModule.ctorParameters = [];
+    RESTModule.ctorParameters = function () { return []; };
     return RESTModule;
 }());
 //# sourceMappingURL=rest.module.js.map
