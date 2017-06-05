@@ -38,11 +38,6 @@ export var Builder = (function () {
                     for (var _i = 0; _i < arguments.length; _i++) {
                         args[_i - 0] = arguments[_i];
                     }
-                    // Body
-                    var body = null;
-                    if (pBody) {
-                        body = JSON.stringify(args[pBody[0].parameterIndex]);
-                    }
                     // Path
                     var resUrl = url;
                     if (pPath) {
@@ -84,13 +79,25 @@ export var Builder = (function () {
                             }
                         }
                     }
+                    // Body
+                    var urlencoded = headers.get('Content-Type');
+                    var body = null;
+                    if (pBody) {
+                        if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
+                            body = args[pBody[0].parameterIndex];
+                        }
+                        else {
+                            body = JSON.stringify(args[pBody[0].parameterIndex]);
+                        }
+                    }
                     // Request options
                     var options = new RequestOptions({
                         method: method,
                         url: this.getBaseUrl() + resUrl,
                         headers: headers,
                         body: body,
-                        search: search
+                        search: search,
+                        withCredentials: this.withCredentials
                     });
                     var req = new Request(options);
                     // intercept the request

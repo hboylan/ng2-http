@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 */
 export declare class RESTClient {
     protected http: Http;
+    withCredentials: boolean;
     constructor(http: Http);
     protected getBaseUrl(): string;
     protected getDefaultHeaders(): Object;

@@ -98,14 +98,15 @@ export class Builder {
               body = JSON.stringify(args[pBody[0].parameterIndex]);
             }
           }
-          
+
           // Request options
           var options = new RequestOptions({
             method,
             url: this.getBaseUrl() + resUrl,
             headers,
             body,
-            search
+            search,
+            withCredentials: this.withCredentials
           });
 
           var req = new Request(options);
