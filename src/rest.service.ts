@@ -101,10 +101,10 @@ export function Produces<T>(interceptor?: (res: Response) => void) {
   return function(target: RESTClient, propertyKey: string, descriptor: any) {
     descriptor.producer = (res: Response) => {
       if (interceptor) {
-        interceptor(res)
+        return interceptor(res)
       }
       return <T>res.json()
-    }
+    };
     return descriptor;
   };
 }
