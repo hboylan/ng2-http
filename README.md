@@ -79,12 +79,19 @@ import {Observable} from 'rxjs/Observable';
 })
 export class DemoService extends RESTClient {
 
-  constructor(protected http: Http) {super(http)}
+  constructor(protected http: Http) {
+    super(http);
 
-  protected requestInterceptor(req: Request) {}
+    // Optional
+    this.withCredentials = true;
+  }
+
+  protected requestInterceptor(req: Request): Observable<Request> {
+    return super.requestInterceptor(req); // wraps Observable.of
+  }
 
   protected responseInterceptor(res: Observable<Response>): Observable<Response> {
-    return res
+    return res;
   }
 
   @POST('/posts')

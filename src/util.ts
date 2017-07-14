@@ -6,6 +6,7 @@ import {
 } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {RESTClient} from './rest.service';
+import 'rxjs/add/operator/mergeMap';
 
 /**
 * Builds custom descriptors
@@ -43,12 +44,6 @@ export class Builder {
         var pHeader = target[`${propertyKey}_Header_parameters`];
 
         descriptor.value = function(...args: any[]) {
-
-          // Body
-          var body = null;
-          if (pBody) {
-            body = JSON.stringify(args[pBody[0].parameterIndex]);
-          }
 
           // Path
           var resUrl: string = url;
@@ -94,32 +89,44 @@ export class Builder {
             }
           }
 
+          // Body
+          var urlencoded = headers.get('Content-Type');
+          var body = null;
+          if (pBody) {
+            if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
+              body = args[pBody[0].parameterIndex];
+            } else {
+              body = JSON.stringify(args[pBody[0].parameterIndex]);
+            }
+          }
+
           // Request options
           var options = new RequestOptions({
             method,
             url: this.getBaseUrl() + resUrl,
             headers,
             body,
-            search
+            search,
+            withCredentials: this.withCredentials
           });
 
-          var req = new Request(options);
-
           // intercept the request
-          this.requestInterceptor(req);
+          return this.requestInterceptor(new Request(options))
+            .mergeMap(req => {
 
-          // make the request and store the observable for later transformation
-          var observable: Observable<any> = this.http.request(req);
+              // make the request and store the observable for later transformation
+              var observable: Observable<any> = this.http.request(req);
 
-          // global response interceptor
-          observable = this.responseInterceptor(observable);
+              // global response interceptor
+              observable = this.responseInterceptor(observable);
 
-          // transform the obserable in accordance to the @Produces decorator
-          if (descriptor.producer) {
-            observable = observable.map(descriptor.producer);
-          }
+              // transform the obserable in accordance to the @Produces decorator
+              if (descriptor.producer) {
+                observable = observable.map(descriptor.producer);
+              }
 
-          return observable;
+              return observable;
+            });
         };
 
         return descriptor;
