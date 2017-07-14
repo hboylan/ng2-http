@@ -11,7 +11,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import {Builder} from './util';
+import {param, method} from './util';
 
 /**
 * Angular 2 RESTClient class.
@@ -116,50 +116,50 @@ export function Produces<T>(interceptor?: (res: Response) => any) {
  * Path variable of a method's url, type: string
  * @param {string} key - path key to bind value
  */
-export let Path = Builder.param('Path');
+export let Path = param('Path');
 /**
  * Query value of a method's url, type: string
  * @param {string} key - query key to bind value
  */
-export let Query = Builder.param('Query');
+export let Query = param('Query');
 /**
  * Body of a REST method, type: key-value pair object
  * Only one body per method!
  */
-export let Body = Builder.param('Body')('Body');
+export let Body = param('Body')('Body');
 /**
  * Custom header of a REST method, type: string
  * @param {string} key - header key to bind value
  */
-export let Header = Builder.param('Header');
+export let Header = param('Header');
 
 /**
  * GET method
  * @param {string} url - resource url of the method
  */
-export let GET = Builder.method(RequestMethods.Get);
+export let GET = method(RequestMethods.Get);
 /**
  * POST method
  * @param {string} url - resource url of the method
  */
-export let POST = Builder.method(RequestMethods.Post);
+export let POST = method(RequestMethods.Post);
 /**
  * PUT method
  * @param {string} url - resource url of the method
  */
-export let PUT = Builder.method(RequestMethods.Put);
+export let PUT = method(RequestMethods.Put);
 /**
  * DELETE method
  * @param {string} url - resource url of the method
  */
-export let DELETE = Builder.method(RequestMethods.Delete);
+export let DELETE = method(RequestMethods.Delete);
 /**
  * HEAD method
  * @param {string} url - resource url of the method
  */
-export let HEAD = Builder.method(RequestMethods.Head);
+export let HEAD = method(RequestMethods.Head);
 /**
  * PATCH method
  * @param {string} url - resource url of the method
  */
-export let PATCH = Builder.method(RequestMethods.Patch);
+export let PATCH = method(RequestMethods.Patch);

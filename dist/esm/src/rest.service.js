@@ -3,14 +3,14 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-import { Builder } from './util';
+import { param, method } from './util';
 /**
 * Angular 2 RESTClient class.
 *
 * @class RESTClient
 * @constructor
 */
-export var RESTClient = (function () {
+var RESTClient = (function () {
     function RESTClient(http) {
         this.http = http;
         this.withCredentials = false;
@@ -55,6 +55,7 @@ export var RESTClient = (function () {
     ]; };
     return RESTClient;
 }());
+export { RESTClient };
 /**
  * Set the base URL of REST resource
  * @param {String} url - base URL
@@ -108,50 +109,50 @@ export function Produces(interceptor) {
  * Path variable of a method's url, type: string
  * @param {string} key - path key to bind value
  */
-export var Path = Builder.param('Path');
+export var Path = param('Path');
 /**
  * Query value of a method's url, type: string
  * @param {string} key - query key to bind value
  */
-export var Query = Builder.param('Query');
+export var Query = param('Query');
 /**
  * Body of a REST method, type: key-value pair object
  * Only one body per method!
  */
-export var Body = Builder.param('Body')('Body');
+export var Body = param('Body')('Body');
 /**
  * Custom header of a REST method, type: string
  * @param {string} key - header key to bind value
  */
-export var Header = Builder.param('Header');
+export var Header = param('Header');
 /**
  * GET method
  * @param {string} url - resource url of the method
  */
-export var GET = Builder.method(RequestMethods.Get);
+export var GET = method(RequestMethods.Get);
 /**
  * POST method
  * @param {string} url - resource url of the method
  */
-export var POST = Builder.method(RequestMethods.Post);
+export var POST = method(RequestMethods.Post);
 /**
  * PUT method
  * @param {string} url - resource url of the method
  */
-export var PUT = Builder.method(RequestMethods.Put);
+export var PUT = method(RequestMethods.Put);
 /**
  * DELETE method
  * @param {string} url - resource url of the method
  */
-export var DELETE = Builder.method(RequestMethods.Delete);
+export var DELETE = method(RequestMethods.Delete);
 /**
  * HEAD method
  * @param {string} url - resource url of the method
  */
-export var HEAD = Builder.method(RequestMethods.Head);
+export var HEAD = method(RequestMethods.Head);
 /**
  * PATCH method
  * @param {string} url - resource url of the method
  */
-export var PATCH = Builder.method(RequestMethods.Patch);
+export var PATCH = method(RequestMethods.Patch);
 //# sourceMappingURL=rest.service.js.map

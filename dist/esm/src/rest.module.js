@@ -6,7 +6,7 @@ import { RESTClient } from './rest.service';
  *
  * @class RESTModule
  */
-export var RESTModule = (function () {
+var RESTModule = (function () {
     function RESTModule() {
     }
     RESTModule.decorators = [
@@ -21,4 +21,5 @@ export var RESTModule = (function () {
     RESTModule.ctorParameters = function () { return []; };
     return RESTModule;
 }());
+export { RESTModule };
 //# sourceMappingURL=rest.module.js.map
