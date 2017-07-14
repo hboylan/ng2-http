@@ -1,6 +1,8 @@
-import { Http, RequestMethod as RequestMethods } from '@angular/http';
+import { Http, Headers as AngularHeaders, RequestOptions, RequestMethod as RequestMethods, URLSearchParams } from '@angular/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import { Builder } from './util';
 /**
 * Angular 2 RESTClient class.
@@ -14,7 +16,11 @@ export var RESTClient = (function () {
         this.withCredentials = false;
     }
     RESTClient.prototype.getBaseUrl = function () {
-        return null;
+        if (AngularHeaders)
+            if (RequestOptions)
+                if (URLSearchParams)
+                    return null; // this is to quash unused imports messages
+        return undefined;
     };
     ;
     RESTClient.prototype.getDefaultHeaders = function () {
@@ -28,7 +34,7 @@ export var RESTClient = (function () {
     * @param {Request} req - request object
     */
     RESTClient.prototype.requestInterceptor = function (req) {
-        return req;
+        return Observable.of(req);
     };
     /**
     * Response Interceptor
@@ -89,10 +95,11 @@ export function Headers(headersDef) {
 export function Produces(interceptor) {
     return function (target, propertyKey, descriptor) {
         descriptor.producer = function (res) {
+            var data;
             if (interceptor) {
-                interceptor(res);
+                data = interceptor(res);
             }
-            return res.json();
+            return data || res.json();
         };
         return descriptor;
     };
@@ -142,4 +149,9 @@ export var DELETE = Builder.method(RequestMethods.Delete);
  * @param {string} url - resource url of the method
  */
 export var HEAD = Builder.method(RequestMethods.Head);
+/**
+ * PATCH method
+ * @param {string} url - resource url of the method
+ */
+export var PATCH = Builder.method(RequestMethods.Patch);
 //# sourceMappingURL=rest.service.js.map

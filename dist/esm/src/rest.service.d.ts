@@ -1,6 +1,7 @@
 import { Http, Request, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 /**
 * Angular 2 RESTClient class.
 *
@@ -19,7 +20,7 @@ export declare class RESTClient {
     * @method requestInterceptor
     * @param {Request} req - request object
     */
-    protected requestInterceptor(req: Request): Request;
+    protected requestInterceptor(req: Request): Observable<Request>;
     /**
     * Response Interceptor
     *
@@ -47,7 +48,7 @@ export declare function Headers(headersDef: any): (target: RESTClient, propertyK
 /**
  * Defines the type(s) that the responses can produce
  */
-export declare function Produces<T>(interceptor?: (res: Response) => void): (target: RESTClient, propertyKey: string, descriptor: any) => any;
+export declare function Produces<T>(interceptor?: (res: Response) => any): (target: RESTClient, propertyKey: string, descriptor: any) => any;
 /**
  * Path variable of a method's url, type: string
  * @param {string} key - path key to bind value
@@ -93,3 +94,8 @@ export declare let DELETE: (url: string) => (target: RESTClient, propertyKey: st
  * @param {string} url - resource url of the method
  */
 export declare let HEAD: (url: string) => (target: RESTClient, propertyKey: string, descriptor: any) => any;
+/**
+ * PATCH method
+ * @param {string} url - resource url of the method
+ */
+export declare let PATCH: (url: string) => (target: RESTClient, propertyKey: string, descriptor: any) => any;

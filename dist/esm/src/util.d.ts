@@ -1,4 +1,5 @@
 import { RESTClient } from './rest.service';
+import 'rxjs/add/operator/mergeMap';
 /**
 * Builds custom descriptors
 *

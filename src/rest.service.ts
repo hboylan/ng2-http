@@ -10,6 +10,7 @@ import {
 import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 import {Builder} from './util';
 
 /**
@@ -39,8 +40,8 @@ export class RESTClient {
   * @method requestInterceptor
   * @param {Request} req - request object
   */
-  protected requestInterceptor(req: Request): Request {
-    return req;
+  protected requestInterceptor(req: Request): Observable<Request> {
+    return Observable.of(req);
   }
 
   /**
@@ -97,13 +98,14 @@ export function Headers(headersDef: any) {
 /**
  * Defines the type(s) that the responses can produce
  */
-export function Produces<T>(interceptor?: (res: Response) => void) {
+export function Produces<T>(interceptor?: (res: Response) => any) {
   return function(target: RESTClient, propertyKey: string, descriptor: any) {
-    descriptor.producer = (res: Response) => {
+    descriptor.producer = (res: Response): any => {
+      let data;
       if (interceptor) {
-        return interceptor(res)
+        data = interceptor(res);
       }
-      return <T>res.json()
+      return data || <T>res.json()
     };
     return descriptor;
   };

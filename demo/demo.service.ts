@@ -13,8 +13,8 @@ export class DemoService extends RESTClient {
 
   constructor(protected http: Http) {super(http)}
 
-  protected requestInterceptor(req: Request): Request {
-    return req;
+  protected requestInterceptor(req: Request): Observable<Request> {
+    return super.requestInterceptor(req);
   }
 
   protected responseInterceptor(res: Observable<Response>): Observable<Response> {

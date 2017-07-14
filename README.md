@@ -86,10 +86,12 @@ export class DemoService extends RESTClient {
     this.withCredentials = true;
   }
 
-  protected requestInterceptor(req: Request) {}
+  protected requestInterceptor(req: Request): Observable<Request> {
+    return super.requestInterceptor(req); // wraps Observable.of
+  }
 
   protected responseInterceptor(res: Observable<Response>): Observable<Response> {
-    return res
+    return res;
   }
 
   @POST('/posts')

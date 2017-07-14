@@ -6,6 +6,7 @@ import {
 } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {RESTClient} from './rest.service';
+import 'rxjs/add/operator/mergeMap';
 
 /**
 * Builds custom descriptors
@@ -109,23 +110,23 @@ export class Builder {
             withCredentials: this.withCredentials
           });
 
-          var req = new Request(options);
-
           // intercept the request
-          this.requestInterceptor(req);
+          return this.requestInterceptor(new Request(options))
+            .mergeMap(req => {
 
-          // make the request and store the observable for later transformation
-          var observable: Observable<any> = this.http.request(req);
+              // make the request and store the observable for later transformation
+              var observable: Observable<any> = this.http.request(req);
 
-          // global response interceptor
-          observable = this.responseInterceptor(observable);
+              // global response interceptor
+              observable = this.responseInterceptor(observable);
 
-          // transform the obserable in accordance to the @Produces decorator
-          if (descriptor.producer) {
-            observable = observable.map(descriptor.producer);
-          }
+              // transform the obserable in accordance to the @Produces decorator
+              if (descriptor.producer) {
+                observable = observable.map(descriptor.producer);
+              }
 
-          return observable;
+              return observable;
+            });
         };
 
         return descriptor;

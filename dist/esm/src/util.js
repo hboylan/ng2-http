@@ -1,4 +1,5 @@
 import { URLSearchParams, Headers as AngularHeaders, RequestOptions, Request } from '@angular/http';
+import 'rxjs/add/operator/mergeMap';
 /**
 * Builds custom descriptors
 *
@@ -34,6 +35,7 @@ export var Builder = (function () {
                 var pBody = target[(propertyKey + "_Body_parameters")];
                 var pHeader = target[(propertyKey + "_Header_parameters")];
                 descriptor.value = function () {
+                    var _this = this;
                     var args = [];
                     for (var _i = 0; _i < arguments.length; _i++) {
                         args[_i - 0] = arguments[_i];
@@ -99,18 +101,19 @@ export var Builder = (function () {
                         search: search,
                         withCredentials: this.withCredentials
                     });
-                    var req = new Request(options);
                     // intercept the request
-                    this.requestInterceptor(req);
-                    // make the request and store the observable for later transformation
-                    var observable = this.http.request(req);
-                    // global response interceptor
-                    observable = this.responseInterceptor(observable);
-                    // transform the obserable in accordance to the @Produces decorator
-                    if (descriptor.producer) {
-                        observable = observable.map(descriptor.producer);
-                    }
-                    return observable;
+                    return this.requestInterceptor(new Request(options))
+                        .mergeMap(function (req) {
+                        // make the request and store the observable for later transformation
+                        var observable = _this.http.request(req);
+                        // global response interceptor
+                        observable = _this.responseInterceptor(observable);
+                        // transform the obserable in accordance to the @Produces decorator
+                        if (descriptor.producer) {
+                            observable = observable.map(descriptor.producer);
+                        }
+                        return observable;
+                    });
                 };
                 return descriptor;
             };
