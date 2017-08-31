@@ -58,10 +58,15 @@ export function method(method: number) {
             var key = p.key;
             var value = args[p.parameterIndex];
             // if the value is a instance of Object, we stringify it
-            if (value instanceof Object) {
-              value = JSON.stringify(value);
+            if (value instanceof Object && key === 'object') {
+              for (let property in value) {
+                if (value.hasOwnProperty(property)) {
+                  search.set(property, value[property]);
+                }
+              }
+            } else {
+              search.set(key, value);
             }
-            search.set(key, value);
           });
         }
 
