@@ -53,7 +53,7 @@ export function method(method: number) {
         var search = new URLSearchParams();
         if (pQuery) {
           pQuery
-          .filter(p => args[p.parameterIndex]) // filter out optional parameters
+          .filter(p => typeof args[p.parameterIndex] !== 'undefined') // filter out optional parameters
           .forEach(p => {
             var key = p.key;
             var value = args[p.parameterIndex];
