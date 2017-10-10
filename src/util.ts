@@ -89,13 +89,13 @@ export function method(method: number) {
         }
 
         // Body
-        var urlencoded = headers.get('Content-Type');
+        var contentType = headers.get('Content-Type');
         var body = null;
         if (pBody) {
-          if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
-            body = args[pBody[0].parameterIndex];
-          } else {
+          if (contentType && contentType === 'application/json') {
             body = JSON.stringify(args[pBody[0].parameterIndex]);
+          } else {
+            body = args[pBody[0].parameterIndex];
           }
         }
 
