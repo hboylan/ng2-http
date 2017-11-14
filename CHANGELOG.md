@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/hboylan/ng2-http/compare/v1.0.0...v1.0.1) (2017-11-14)
+
+
+### Bug Fixes
+
+* only encode body as JSON for content-type application/json ([fa035d2](https://github.com/hboylan/ng2-http/commit/fa035d2))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/hboylan/ng2-http/compare/v0.0.5...v1.0.0) (2017-07-14)
 
