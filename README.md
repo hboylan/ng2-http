@@ -10,7 +10,7 @@
 [![Join the chat at https://gitter.im/ng2-http/Lobby](https://badges.gitter.im/ng2-http/Lobby.svg)](https://gitter.im/ng2-http/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Demo
-https://hboylan.github.io/ng2-http/demo/
+https://hboylan.github.io/ng2-http/demo
 
 ## Table of contents
 
@@ -18,18 +18,13 @@ https://hboylan.github.io/ng2-http/demo/
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [Development](#development)
-- [License](#licence)
+- [License](#license)
 
 ## About
 
 Angular2 HttpModule wrapper with decorators and interceptors
 
 ### Shoutout! (╯°□°）╯
-
-Generated this project using this awesome Yeoman generator:
-```bash
-yarn add generator-angular2-module --dev
-```
 
 Based the source code from [this](https://github.com/Paldom/angular2-rest) repo.
 
@@ -163,7 +158,7 @@ Run `npm start` to start a development server on port 8000 with auto reload + te
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
 
 ### Release
-* Bump the version in package.json (once the module hits 1.0 this will become automatic)
+* Bump the version in package.json (experts only)
 ```bash
 npm run release
 ```

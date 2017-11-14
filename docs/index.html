@@ -7,7 +7,6 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
-	<script src="assets/js/modernizr.js"></script>
 </head>
 <body>
 <header>
@@ -75,21 +74,18 @@
 					<a href="https://raw.githubusercontent.com/hboylan/ng2-http/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a>
 				<a href="https://gitter.im/ng2-http/Lobby?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/ng2-http/Lobby.svg" alt="Join the chat at https://gitter.im/ng2-http/Lobby"></a></p>
 				<h2 id="demo">Demo</h2>
-				<p><a href="https://hboylan.github.io/ng2-http/demo/">https://hboylan.github.io/ng2-http/demo/</a></p>
+				<p><a href="https://hboylan.github.io/ng2-http/demo">https://hboylan.github.io/ng2-http/demo</a></p>
 				<h2 id="table-of-contents">Table of contents</h2>
 				<ul>
 					<li><a href="#about">About</a></li>
 					<li><a href="#installation">Installation</a></li>
 					<li><a href="#documentation">Documentation</a></li>
 					<li><a href="#development">Development</a></li>
-					<li><a href="#licence">License</a></li>
+					<li><a href="#license">License</a></li>
 				</ul>
 				<h2 id="about">About</h2>
 				<p>Angular2 HttpModule wrapper with decorators and interceptors</p>
 				<h3 id="shoutout-">Shoutout! (╯°□°）╯</h3>
-				<p>Generated this project using this awesome Yeoman generator:</p>
-				<pre><code class="lang-bash">yarn add generator-angular2-module --dev
-</code></pre>
 				<p>Based the source code from <a href="https://github.com/Paldom/angular2-rest">this</a> repo.</p>
 				<h2 id="installation">Installation</h2>
 				<p>Install through yarn:</p>
@@ -100,13 +96,13 @@
 </code></pre>
 				<p>Then use it in your app like so:</p>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.module.ts</span>
-<span class="hljs-keyword">import</span> {NgModule} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {BrowserModule} from <span class="hljs-string">'@angular/platform-browser'</span>;
-<span class="hljs-keyword">import</span> {RESTModule} from <span class="hljs-string">'ng2-http'</span>;
-<span class="hljs-keyword">import</span> {Demo} from <span class="hljs-string">'./demo.component'</span>;
-<span class="hljs-keyword">import</span> {DemoService} from <span class="hljs-string">'./demo.service'</span>;
+<span class="hljs-keyword">import</span> {NgModule} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {BrowserModule} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/platform-browser'</span>;
+<span class="hljs-keyword">import</span> {RESTModule} <span class="hljs-keyword">from</span> <span class="hljs-string">'ng2-http'</span>;
+<span class="hljs-keyword">import</span> {Demo} <span class="hljs-keyword">from</span> <span class="hljs-string">'./demo.component'</span>;
+<span class="hljs-keyword">import</span> {DemoService} <span class="hljs-keyword">from</span> <span class="hljs-string">'./demo.service'</span>;
 
-@NgModule({
+<span class="hljs-meta">@NgModule</span>({
   declarations: [Demo],
   imports: [BrowserModule, RESTModule],
   bootstrap: [Demo],
@@ -115,60 +111,67 @@
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoModule {}
 </code></pre>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.service.ts</span>
-<span class="hljs-keyword">import</span> {Injectable} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {Http, Request, Response} from <span class="hljs-string">'@angular/http'</span>;
-<span class="hljs-keyword">import</span> {RESTClient, BaseUrl, DefaultHeaders, GET, POST, Body, Query, Produces} from <span class="hljs-string">'ng2-http'</span>;
-<span class="hljs-keyword">import</span> {Observable} from <span class="hljs-string">'rxjs/Observable'</span>;
+<span class="hljs-keyword">import</span> {Injectable} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {Http, Request, Response} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/http'</span>;
+<span class="hljs-keyword">import</span> {RESTClient, BaseUrl, DefaultHeaders, GET, POST, Body, Query, Produces} <span class="hljs-keyword">from</span> <span class="hljs-string">'ng2-http'</span>;
+<span class="hljs-keyword">import</span> {Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/Observable'</span>;
 
-@Injectable()
-@BaseUrl(<span class="hljs-string">'https://jsonplaceholder.typicode.com'</span>)
-@DefaultHeaders({
+<span class="hljs-meta">@Injectable</span>()
+<span class="hljs-meta">@BaseUrl</span>(<span class="hljs-string">'https://jsonplaceholder.typicode.com'</span>)
+<span class="hljs-meta">@DefaultHeaders</span>({
   <span class="hljs-string">'Accept'</span>: <span class="hljs-string">'application/json'</span>,
   <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>
 })
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoService extends RESTClient {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoService <span class="hljs-keyword">extends</span> RESTClient {
 
-  <span class="hljs-keyword">constructor</span>(protected http: Http) {<span class="hljs-keyword">super</span>(http)}
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">protected</span> http: Http</span>) {
+    <span class="hljs-keyword">super</span>(http);
 
-  <span class="hljs-keyword">protected</span> requestInterceptor(req: Request) {}
-
-  <span class="hljs-keyword">protected</span> responseInterceptor(res: Observable&lt;Response&gt;): Observable&lt;Response&gt; {
-    <span class="hljs-keyword">return</span> res
+    <span class="hljs-comment">// Optional</span>
+    <span class="hljs-keyword">this</span>.withCredentials = <span class="hljs-literal">true</span>;
   }
 
-  @POST(<span class="hljs-string">'/posts'</span>)
-  @Produces&lt;Post&gt;()
-  <span class="hljs-keyword">public</span> createPost(@Body post: Post): Observable&lt;Post&gt; {
+  <span class="hljs-keyword">protected</span> requestInterceptor(req: Request): Observable&lt;Request&gt; {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.requestInterceptor(req); <span class="hljs-comment">// wraps Observable.of</span>
+  }
+
+  <span class="hljs-keyword">protected</span> responseInterceptor(res: Observable&lt;Response&gt;): Observable&lt;Response&gt; {
+    <span class="hljs-keyword">return</span> res;
+  }
+
+  <span class="hljs-meta">@POST</span>(<span class="hljs-string">'/posts'</span>)
+  <span class="hljs-meta">@Produces</span>&lt;Post&gt;()
+  <span class="hljs-keyword">public</span> createPost(<span class="hljs-meta">@Body</span> post: Post): Observable&lt;Post&gt; {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
   }
 
-  @GET(<span class="hljs-string">'/posts'</span>)
-  @Produces&lt;Post[]&gt;()
-  <span class="hljs-keyword">public</span> getPosts(@Query(<span class="hljs-string">'userId'</span>) userId?: <span class="hljs-built_in">number</span>): Observable&lt;Post[]&gt; {
+  <span class="hljs-meta">@GET</span>(<span class="hljs-string">'/posts'</span>)
+  <span class="hljs-meta">@Produces</span>&lt;Post[]&gt;()
+  <span class="hljs-keyword">public</span> getPosts(<span class="hljs-meta">@Query</span>(<span class="hljs-string">'userId'</span>) userId?: <span class="hljs-built_in">number</span>): Observable&lt;Post[]&gt; {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
   }
 }
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Post {
 
-  <span class="hljs-keyword">constructor</span>(
-    public userId: number,
-    public title: string,
-    public body: string,
-    public id?: number
-  ) {}
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">
+    <span class="hljs-keyword">public</span> userId: <span class="hljs-built_in">number</span>,
+    <span class="hljs-keyword">public</span> title: <span class="hljs-built_in">string</span>,
+    <span class="hljs-keyword">public</span> body: <span class="hljs-built_in">string</span>,
+    <span class="hljs-keyword">public</span> id?: <span class="hljs-built_in">number</span>
+  </span>) {}
 }
 </code></pre>
 				<pre><code class="lang-typescript"><span class="hljs-comment">// demo.component.ts</span>
-<span class="hljs-keyword">import</span> {Component, Input} from <span class="hljs-string">'@angular/core'</span>;
-<span class="hljs-keyword">import</span> {DemoService, Post} from <span class="hljs-string">'./demo.service'</span>;
+<span class="hljs-keyword">import</span> {Component, Input} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {DemoService, Post} <span class="hljs-keyword">from</span> <span class="hljs-string">'./demo.service'</span>;
 
-@Component(...)
+<span class="hljs-meta">@Component</span>(...)
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Demo {
-  @Input() <span class="hljs-keyword">public</span> demoPost: Post = <span class="hljs-keyword">new</span> Post(<span class="hljs-number">1</span>, <span class="hljs-string">'Demo Title'</span>, <span class="hljs-string">'Demo Body'</span>);
-  @Input() <span class="hljs-keyword">public</span> demoList: Post[] = [];
+  <span class="hljs-meta">@Input</span>() <span class="hljs-keyword">public</span> demoPost: Post = <span class="hljs-keyword">new</span> Post(<span class="hljs-number">1</span>, <span class="hljs-string">'Demo Title'</span>, <span class="hljs-string">'Demo Body'</span>);
+  <span class="hljs-meta">@Input</span>() <span class="hljs-keyword">public</span> demoList: Post[] = [];
 
-  <span class="hljs-keyword">constructor</span>(public demoService: DemoService) {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> demoService: DemoService</span>) {
     <span class="hljs-keyword">this</span>.getPosts();
   }
 
@@ -177,7 +180,7 @@
   }
 
   getPosts() {
-    <span class="hljs-keyword">this</span>.demoService.getPosts().subscribe(posts =&gt; {
+    <span class="hljs-keyword">this</span>.demoService.getPosts().subscribe(<span class="hljs-function"><span class="hljs-params">posts</span> =&gt;</span> {
       <span class="hljs-keyword">this</span>.demoList = posts;
     });
   }
@@ -199,7 +202,7 @@
 				<p>Run <code>npm test</code> to run tests once or <code>npm run test:watch</code> to continually run tests.</p>
 				<h3 id="release">Release</h3>
 				<ul>
-					<li>Bump the version in package.json (once the module hits 1.0 this will become automatic)<pre><code class="lang-bash">npm run release
+					<li>Bump the version in package.json (experts only)<pre><code class="lang-bash">npm run release
 </code></pre>
 					</li>
 				</ul>
@@ -213,58 +216,22 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rest_module_.html">"rest.module"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_rest_service_.html">"rest.service"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_util_.html">"util"</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="classes/builder.html" class="tsd-kind-icon">Builder</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/restclient.html" class="tsd-kind-icon">RESTClient</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/restmodule.html" class="tsd-kind-icon">RESTModule</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#body" class="tsd-kind-icon">Body</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#delete" class="tsd-kind-icon">DELETE</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#get" class="tsd-kind-icon">GET</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#head" class="tsd-kind-icon">HEAD</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#header" class="tsd-kind-icon">Header</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#post" class="tsd-kind-icon">POST</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#put" class="tsd-kind-icon">PUT</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#path" class="tsd-kind-icon">Path</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#query" class="tsd-kind-icon">Query</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#baseurl" class="tsd-kind-icon">Base<wbr>Url</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#defaultheaders" class="tsd-kind-icon">Default<wbr>Headers</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#headers" class="tsd-kind-icon">Headers</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#produces" class="tsd-kind-icon">Produces</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -330,7 +297,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
