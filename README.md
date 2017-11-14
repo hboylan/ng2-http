@@ -24,8 +24,6 @@ https://hboylan.github.io/ng2-http/demo
 
 Angular2 HttpModule wrapper with decorators and interceptors
 
-### Shoutout! (╯°□°）╯
-
 Based the source code from [this](https://github.com/Paldom/angular2-rest) repo.
 
 ## Installation
