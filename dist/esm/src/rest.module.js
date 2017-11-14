@@ -6,20 +6,20 @@ import { RESTClient } from './rest.service';
  *
  * @class RESTModule
  */
-var RESTModule = (function () {
+var /**
+ * Main Angular2 NgModule. Exports HttpModule for you.
+ *
+ * @class RESTModule
+ */
+RESTModule = /** @class */ (function () {
     function RESTModule() {
     }
-    RESTModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [],
-                    imports: [HttpModule],
-                    exports: [HttpModule],
-                    providers: [RESTClient]
-                },] },
-    ];
-    /** @nocollapse */
-    RESTModule.ctorParameters = function () { return []; };
     return RESTModule;
 }());
+/**
+ * Main Angular2 NgModule. Exports HttpModule for you.
+ *
+ * @class RESTModule
+ */
 export { RESTModule };
 //# sourceMappingURL=rest.module.js.map

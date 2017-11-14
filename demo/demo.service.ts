@@ -27,7 +27,7 @@ export class DemoService extends RESTClient {
       console.log(name, '=', values)
     })
   })
-  public getPosts(@Query('$userId') userId?: number): Observable<Post[]> {
+  public getPosts(@Query('userId') userId?: number): Observable<Post[]> {
     return null;
   }
 

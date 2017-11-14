@@ -83,7 +83,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @class RESTModule
 	 */
-	var RESTModule = (function () {
+	var RESTModule = /** @class */ (function () {
 	    function RESTModule() {
 	    }
 	    RESTModule = __decorate([
@@ -132,16 +132,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var http_1 = __webpack_require__(3);
 	var core_1 = __webpack_require__(2);
 	var Observable_1 = __webpack_require__(5);
-	__webpack_require__(19);
 	__webpack_require__(21);
-	var util_1 = __webpack_require__(27);
+	__webpack_require__(24);
+	var util_1 = __webpack_require__(30);
 	/**
 	* Angular 2 RESTClient class.
 	*
 	* @class RESTClient
 	* @constructor
 	*/
-	var RESTClient = (function () {
+	var RESTClient = /** @class */ (function () {
 	    function RESTClient(http) {
 	        this.http = http;
 	        this.withCredentials = false;
@@ -298,8 +298,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var root_1 = __webpack_require__(6);
 	var toSubscriber_1 = __webpack_require__(7);
 	var observable_1 = __webpack_require__(18);
+	var pipe_1 = __webpack_require__(19);
 	/**
-	 * A representation of any set of values over any amount of time. This the most basic building block
+	 * A representation of any set of values over any amount of time. This is the most basic building block
 	 * of RxJS.
 	 *
 	 * @class Observable<T>
@@ -307,7 +308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Observable = (function () {
 	    /**
 	     * @constructor
-	     * @param {Function} subscribe the function that is  called when the Observable is
+	     * @param {Function} subscribe the function that is called when the Observable is
 	     * initially subscribed to. This function is given a Subscriber, to which new values
 	     * can be `next`ed, or an `error` method can be called to raise an error, or
 	     * `complete` can be called to notify of a successful completion.
@@ -336,7 +337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *
 	     * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
 	     *
-	     * `subscribe` is not a regular operator, but a method that calls Observables internal `subscribe` function. It
+	     * `subscribe` is not a regular operator, but a method that calls Observable's internal `subscribe` function. It
 	     * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
 	     * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
 	     * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
@@ -378,7 +379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *     console.log('Adding: ' + value);
 	     *     this.sum = this.sum + value;
 	     *   },
-	     *   error() { // We actually could just remote this method,
+	     *   error() { // We actually could just remove this method,
 	     *   },        // since we do not really care about errors right now.
 	     *   complete() {
 	     *     console.log('Sum equals: ' + this.sum);
@@ -433,7 +434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * // Logs:
 	     * // 0 after 1s
 	     * // 1 after 2s
-	     * // "unsubscribed!" after 2,5s
+	     * // "unsubscribed!" after 2.5s
 	     *
 	     *
 	     * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
@@ -532,6 +533,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    Observable.prototype[observable_1.observable] = function () {
 	        return this;
+	    };
+	    /* tslint:enable:max-line-length */
+	    /**
+	     * Used to stitch together functional operators into a chain.
+	     * @method pipe
+	     * @return {Observable} the Observable result of all of the operators having
+	     * been called in the order they were passed in.
+	     *
+	     * @example
+	     *
+	     * import { map, filter, scan } from 'rxjs/operators';
+	     *
+	     * Rx.Observable.interval(1000)
+	     *   .pipe(
+	     *     filter(x => x % 2 === 0),
+	     *     map(x => x + x),
+	     *     scan((acc, x) => acc + x)
+	     *   )
+	     *   .subscribe(x => console.log(x))
+	     */
+	    Observable.prototype.pipe = function () {
+	        var operations = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            operations[_i - 0] = arguments[_i];
+	        }
+	        if (operations.length === 0) {
+	            return this;
+	        }
+	        return pipe_1.pipeFromArray(operations)(this);
+	    };
+	    /* tslint:enable:max-line-length */
+	    Observable.prototype.toPromise = function (PromiseCtor) {
+	        var _this = this;
+	        if (!PromiseCtor) {
+	            if (root_1.root.Rx && root_1.root.Rx.config && root_1.root.Rx.config.Promise) {
+	                PromiseCtor = root_1.root.Rx.config.Promise;
+	            }
+	            else if (root_1.root.Promise) {
+	                PromiseCtor = root_1.root.Promise;
+	            }
+	        }
+	        if (!PromiseCtor) {
+	            throw new Error('no Promise impl found');
+	        }
+	        return new PromiseCtor(function (resolve, reject) {
+	            var value;
+	            _this.subscribe(function (x) { return value = x; }, function (err) { return reject(err); }, function () { return resolve(value); });
+	        });
 	    };
 	    // HACK: Since TypeScript inherits static properties too, we have to
 	    // fight against TypeScript here so Subject can have a different static create signature
@@ -1225,13 +1274,98 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var noop_1 = __webpack_require__(20);
+	/* tslint:enable:max-line-length */
+	function pipe() {
+	    var fns = [];
+	    for (var _i = 0; _i < arguments.length; _i++) {
+	        fns[_i - 0] = arguments[_i];
+	    }
+	    return pipeFromArray(fns);
+	}
+	exports.pipe = pipe;
+	/* @internal */
+	function pipeFromArray(fns) {
+	    if (!fns) {
+	        return noop_1.noop;
+	    }
+	    if (fns.length === 1) {
+	        return fns[0];
+	    }
+	    return function piped(input) {
+	        return fns.reduce(function (prev, fn) { return fn(prev); }, input);
+	    };
+	}
+	exports.pipeFromArray = pipeFromArray;
+	//# sourceMappingURL=pipe.js.map
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	/* tslint:disable:no-empty */
+	function noop() { }
+	exports.noop = noop;
+	//# sourceMappingURL=noop.js.map
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
 	var Observable_1 = __webpack_require__(5);
-	var map_1 = __webpack_require__(20);
+	var map_1 = __webpack_require__(22);
 	Observable_1.Observable.prototype.map = map_1.map;
 	//# sourceMappingURL=map.js.map
 
 /***/ }),
-/* 20 */
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var map_1 = __webpack_require__(23);
+	/**
+	 * Applies a given `project` function to each value emitted by the source
+	 * Observable, and emits the resulting values as an Observable.
+	 *
+	 * <span class="informal">Like [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),
+	 * it passes each source value through a transformation function to get
+	 * corresponding output values.</span>
+	 *
+	 * <img src="./img/map.png" width="100%">
+	 *
+	 * Similar to the well known `Array.prototype.map` function, this operator
+	 * applies a projection to each value and emits that projection in the output
+	 * Observable.
+	 *
+	 * @example <caption>Map every click to the clientX position of that click</caption>
+	 * var clicks = Rx.Observable.fromEvent(document, 'click');
+	 * var positions = clicks.map(ev => ev.clientX);
+	 * positions.subscribe(x => console.log(x));
+	 *
+	 * @see {@link mapTo}
+	 * @see {@link pluck}
+	 *
+	 * @param {function(value: T, index: number): R} project The function to apply
+	 * to each `value` emitted by the source Observable. The `index` parameter is
+	 * the number `i` for the i-th emission that has happened since the
+	 * subscription, starting from the number `0`.
+	 * @param {any} [thisArg] An optional argument to define what `this` is in the
+	 * `project` function.
+	 * @return {Observable<R>} An Observable that emits the values from the source
+	 * Observable transformed by the given `project` function.
+	 * @method map
+	 * @owner Observable
+	 */
+	function map(project, thisArg) {
+	    return map_1.map(project, thisArg)(this);
+	}
+	exports.map = map;
+	//# sourceMappingURL=map.js.map
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1275,10 +1409,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @owner Observable
 	 */
 	function map(project, thisArg) {
-	    if (typeof project !== 'function') {
-	        throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
-	    }
-	    return this.lift(new MapOperator(project, thisArg));
+	    return function mapOperation(source) {
+	        if (typeof project !== 'function') {
+	            throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
+	        }
+	        return source.lift(new MapOperator(project, thisArg));
+	    };
 	}
 	exports.map = map;
 	var MapOperator = (function () {
@@ -1323,26 +1459,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=map.js.map
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Observable_1 = __webpack_require__(5);
-	var of_1 = __webpack_require__(22);
+	var of_1 = __webpack_require__(25);
 	Observable_1.Observable.of = of_1.of;
 	//# sourceMappingURL=of.js.map
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var ArrayObservable_1 = __webpack_require__(23);
+	var ArrayObservable_1 = __webpack_require__(26);
 	exports.of = ArrayObservable_1.ArrayObservable.of;
 	//# sourceMappingURL=of.js.map
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1352,9 +1488,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var Observable_1 = __webpack_require__(5);
-	var ScalarObservable_1 = __webpack_require__(24);
-	var EmptyObservable_1 = __webpack_require__(25);
-	var isScheduler_1 = __webpack_require__(26);
+	var ScalarObservable_1 = __webpack_require__(27);
+	var EmptyObservable_1 = __webpack_require__(28);
+	var isScheduler_1 = __webpack_require__(29);
 	/**
 	 * We need this JSDoc comment for affecting ESDoc.
 	 * @extends {Ignored}
@@ -1469,7 +1605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=ArrayObservable.js.map
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1532,7 +1668,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=ScalarObservable.js.map
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1618,7 +1754,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=EmptyObservable.js.map
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1629,13 +1765,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=isScheduler.js.map
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var http_1 = __webpack_require__(3);
-	__webpack_require__(28);
+	__webpack_require__(31);
 	// Store request parameters
 	function param(paramName) {
 	    return function (key) {
@@ -1682,15 +1818,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var search = new http_1.URLSearchParams();
 	                if (pQuery) {
 	                    pQuery
-	                        .filter(function (p) { return args[p.parameterIndex]; }) // filter out optional parameters
+	                        .filter(function (p) { return typeof args[p.parameterIndex] !== 'undefined'; }) // filter out optional parameters
 	                        .forEach(function (p) {
 	                        var key = p.key;
 	                        var value = args[p.parameterIndex];
 	                        // if the value is a instance of Object, we stringify it
-	                        if (value instanceof Object) {
-	                            value = JSON.stringify(value);
+	                        if (value instanceof Object && key === 'object') {
+	                            for (var property in value) {
+	                                if (value.hasOwnProperty(property)) {
+	                                    search.set(property, value[property]);
+	                                }
+	                            }
 	                        }
-	                        search.set(key, value);
+	                        else {
+	                            search.set(key, value);
+	                        }
 	                    });
 	                }
 	                // Headers
@@ -1711,14 +1853,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 	                // Body
-	                var urlencoded = headers.get('Content-Type');
+	                var contentType = headers.get('Content-Type');
 	                var body = null;
 	                if (pBody) {
-	                    if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
-	                        body = args[pBody[0].parameterIndex];
+	                    if (contentType && contentType === 'application/json') {
+	                        body = JSON.stringify(args[pBody[0].parameterIndex]);
 	                    }
 	                    else {
-	                        body = JSON.stringify(args[pBody[0].parameterIndex]);
+	                        body = args[pBody[0].parameterIndex];
 	                    }
 	                }
 	                // Request options
@@ -1752,28 +1894,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var Observable_1 = __webpack_require__(5);
-	var mergeMap_1 = __webpack_require__(29);
+	var mergeMap_1 = __webpack_require__(32);
 	Observable_1.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
 	Observable_1.Observable.prototype.flatMap = mergeMap_1.mergeMap;
 	//# sourceMappingURL=mergeMap.js.map
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var subscribeToResult_1 = __webpack_require__(30);
-	var OuterSubscriber_1 = __webpack_require__(35);
+	var mergeMap_1 = __webpack_require__(33);
 	/* tslint:enable:max-line-length */
 	/**
 	 * Projects each source value to an Observable which is merged in the output
@@ -1835,11 +1971,91 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	function mergeMap(project, resultSelector, concurrent) {
 	    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
-	    if (typeof resultSelector === 'number') {
-	        concurrent = resultSelector;
-	        resultSelector = null;
-	    }
-	    return this.lift(new MergeMapOperator(project, resultSelector, concurrent));
+	    return mergeMap_1.mergeMap(project, resultSelector, concurrent)(this);
+	}
+	exports.mergeMap = mergeMap;
+	//# sourceMappingURL=mergeMap.js.map
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var subscribeToResult_1 = __webpack_require__(34);
+	var OuterSubscriber_1 = __webpack_require__(39);
+	/* tslint:enable:max-line-length */
+	/**
+	 * Projects each source value to an Observable which is merged in the output
+	 * Observable.
+	 *
+	 * <span class="informal">Maps each value to an Observable, then flattens all of
+	 * these inner Observables using {@link mergeAll}.</span>
+	 *
+	 * <img src="./img/mergeMap.png" width="100%">
+	 *
+	 * Returns an Observable that emits items based on applying a function that you
+	 * supply to each item emitted by the source Observable, where that function
+	 * returns an Observable, and then merging those resulting Observables and
+	 * emitting the results of this merger.
+	 *
+	 * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
+	 * var letters = Rx.Observable.of('a', 'b', 'c');
+	 * var result = letters.mergeMap(x =>
+	 *   Rx.Observable.interval(1000).map(i => x+i)
+	 * );
+	 * result.subscribe(x => console.log(x));
+	 *
+	 * // Results in the following:
+	 * // a0
+	 * // b0
+	 * // c0
+	 * // a1
+	 * // b1
+	 * // c1
+	 * // continues to list a,b,c with respective ascending integers
+	 *
+	 * @see {@link concatMap}
+	 * @see {@link exhaustMap}
+	 * @see {@link merge}
+	 * @see {@link mergeAll}
+	 * @see {@link mergeMapTo}
+	 * @see {@link mergeScan}
+	 * @see {@link switchMap}
+	 *
+	 * @param {function(value: T, ?index: number): ObservableInput} project A function
+	 * that, when applied to an item emitted by the source Observable, returns an
+	 * Observable.
+	 * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
+	 * A function to produce the value on the output Observable based on the values
+	 * and the indices of the source (outer) emission and the inner Observable
+	 * emission. The arguments passed to this function are:
+	 * - `outerValue`: the value that came from the source
+	 * - `innerValue`: the value that came from the projected Observable
+	 * - `outerIndex`: the "index" of the value that came from the source
+	 * - `innerIndex`: the "index" of the value from the projected Observable
+	 * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
+	 * Observables being subscribed to concurrently.
+	 * @return {Observable} An Observable that emits the result of applying the
+	 * projection function (and the optional `resultSelector`) to each item emitted
+	 * by the source Observable and merging the results of the Observables obtained
+	 * from this transformation.
+	 * @method mergeMap
+	 * @owner Observable
+	 */
+	function mergeMap(project, resultSelector, concurrent) {
+	    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+	    return function mergeMapOperatorFunction(source) {
+	        if (typeof resultSelector === 'number') {
+	            concurrent = resultSelector;
+	            resultSelector = null;
+	        }
+	        return source.lift(new MergeMapOperator(project, resultSelector, concurrent));
+	    };
 	}
 	exports.mergeMap = mergeMap;
 	var MergeMapOperator = (function () {
@@ -1939,17 +2155,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=mergeMap.js.map
 
 /***/ }),
-/* 30 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var root_1 = __webpack_require__(6);
-	var isArrayLike_1 = __webpack_require__(31);
-	var isPromise_1 = __webpack_require__(32);
+	var isArrayLike_1 = __webpack_require__(35);
+	var isPromise_1 = __webpack_require__(36);
 	var isObject_1 = __webpack_require__(12);
 	var Observable_1 = __webpack_require__(5);
-	var iterator_1 = __webpack_require__(33);
-	var InnerSubscriber_1 = __webpack_require__(34);
+	var iterator_1 = __webpack_require__(37);
+	var InnerSubscriber_1 = __webpack_require__(38);
 	var observable_1 = __webpack_require__(18);
 	function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
 	    var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
@@ -1963,6 +2179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return null;
 	        }
 	        else {
+	            destination.syncErrorThrowable = true;
 	            return result.subscribe(destination);
 	        }
 	    }
@@ -2022,7 +2239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=subscribeToResult.js.map
 
 /***/ }),
-/* 31 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2030,7 +2247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=isArrayLike.js.map
 
 /***/ }),
-/* 32 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2041,7 +2258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=isPromise.js.map
 
 /***/ }),
-/* 33 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2084,7 +2301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=iterator.js.map
 
 /***/ }),
-/* 34 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2125,7 +2342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=InnerSubscriber.js.map
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";

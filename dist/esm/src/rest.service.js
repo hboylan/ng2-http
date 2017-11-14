@@ -1,4 +1,4 @@
-import { Http, Headers as AngularHeaders, RequestOptions, RequestMethod as RequestMethods, URLSearchParams } from '@angular/http';
+import { Http, Headers as AngularHeaders, Request, RequestOptions, RequestMethod as RequestMethods, Response, URLSearchParams } from '@angular/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -10,10 +10,15 @@ import { param, method } from './util';
 * @class RESTClient
 * @constructor
 */
-var RESTClient = (function () {
+var /**
+* Angular 2 RESTClient class.
+*
+* @class RESTClient
+* @constructor
+*/
+RESTClient = /** @class */ (function () {
     function RESTClient(http) {
         this.http = http;
-        this.withCredentials = false;
     }
     RESTClient.prototype.getBaseUrl = function () {
         if (AngularHeaders)
@@ -33,7 +38,19 @@ var RESTClient = (function () {
     * @method requestInterceptor
     * @param {Request} req - request object
     */
-    RESTClient.prototype.requestInterceptor = function (req) {
+    /**
+      * Request Interceptor
+      *
+      * @method requestInterceptor
+      * @param {Request} req - request object
+      */
+    RESTClient.prototype.requestInterceptor = /**
+      * Request Interceptor
+      *
+      * @method requestInterceptor
+      * @param {Request} req - request object
+      */
+    function (req) {
         return Observable.of(req);
     };
     /**
@@ -43,18 +60,31 @@ var RESTClient = (function () {
     * @param {Response} res - response object
     * @returns {Response} res - transformed response object
     */
-    RESTClient.prototype.responseInterceptor = function (res) {
+    /**
+      * Response Interceptor
+      *
+      * @method responseInterceptor
+      * @param {Response} res - response object
+      * @returns {Response} res - transformed response object
+      */
+    RESTClient.prototype.responseInterceptor = /**
+      * Response Interceptor
+      *
+      * @method responseInterceptor
+      * @param {Response} res - response object
+      * @returns {Response} res - transformed response object
+      */
+    function (res) {
         return res;
     };
-    RESTClient.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    RESTClient.ctorParameters = function () { return [
-        { type: Http, decorators: [{ type: Inject, args: [Http,] },] },
-    ]; };
     return RESTClient;
 }());
+/**
+* Angular 2 RESTClient class.
+*
+* @class RESTClient
+* @constructor
+*/
 export { RESTClient };
 /**
  * Set the base URL of REST resource

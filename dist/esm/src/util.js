@@ -1,4 +1,6 @@
 import { URLSearchParams, Headers as AngularHeaders, RequestOptions, Request } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { RESTClient } from './rest.service';
 import 'rxjs/add/operator/mergeMap';
 // Store request parameters
 export function param(paramName) {
@@ -45,15 +47,21 @@ export function method(method) {
                 var search = new URLSearchParams();
                 if (pQuery) {
                     pQuery
-                        .filter(function (p) { return args[p.parameterIndex]; }) // filter out optional parameters
+                        .filter(function (p) { return typeof args[p.parameterIndex] !== 'undefined'; }) // filter out optional parameters
                         .forEach(function (p) {
                         var key = p.key;
                         var value = args[p.parameterIndex];
                         // if the value is a instance of Object, we stringify it
-                        if (value instanceof Object) {
-                            value = JSON.stringify(value);
+                        if (value instanceof Object && key === 'object') {
+                            for (var property in value) {
+                                if (value.hasOwnProperty(property)) {
+                                    search.set(property, value[property]);
+                                }
+                            }
                         }
-                        search.set(key, value);
+                        else {
+                            search.set(key, value);
+                        }
                     });
                 }
                 // Headers
@@ -74,14 +82,14 @@ export function method(method) {
                     }
                 }
                 // Body
-                var urlencoded = headers.get('Content-Type');
+                var contentType = headers.get('Content-Type');
                 var body = null;
                 if (pBody) {
-                    if (urlencoded && urlencoded === 'application/x-www-form-urlencoded') {
-                        body = args[pBody[0].parameterIndex];
+                    if (contentType && contentType === 'application/json') {
+                        body = JSON.stringify(args[pBody[0].parameterIndex]);
                     }
                     else {
-                        body = JSON.stringify(args[pBody[0].parameterIndex]);
+                        body = args[pBody[0].parameterIndex];
                     }
                 }
                 // Request options
